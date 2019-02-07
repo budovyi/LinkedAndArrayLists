@@ -43,7 +43,6 @@ public class MyArrayList<T> implements MyList<T> {
         } else {
             throw new IndexOutOfBoundsException();
         }
-
     }
 
     @Override
