@@ -27,6 +27,7 @@ public class Demo {
 
         System.out.println(list2);
         list2.remove(2);
-        System.out.println(list2.get(2));        System.out.println(list2);
+        System.out.println(list2.get(2));
+        System.out.println(list2);
     }
 }
