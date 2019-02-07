@@ -7,46 +7,53 @@ public class MyLinkedList<T> implements MyList<T> {
     private Node<T> last;
 
     @Override
-    public T get(int i) {
-        Node<T> temp = first;
-        for (int j = 0; j < i; j++) {
-            temp = temp.next;
+    public T get(int index) {
+        if (index < size) {
+            Node<T> temp = first;
+            for (int j = 0; j < index; j++) {
+                temp = temp.next;
+            }
+            return temp.element;
         }
-        return temp.t;
+        throw new IndexOutOfBoundsException();
     }
 
     @Override
-    public void add(T t) {
+    public void add(T element) {
         if (0 == size) {
-            first = new Node<>(null, t, null);
+            first = new Node<>(null, element, null);
             last = first;
             size++;
 
         } else {
-            last = new Node<>(last, t, null);
+            last = new Node<>(last, element, null);
             last.prev.next = last;
             size++;
         }
     }
 
     @Override
-    public void remove(int i) {
-
-        Node<T> temp = first;
-        for (int j = 0; j < i; j++) {
-            temp = temp.next;
-        }
-        if (0 == i) {
-            first = first.next;
-            first.prev = null;
-        } else if (i == size - 1) {
-            last = last.prev;
-            last.next = null;
+    public void remove(int index) {
+        if (index < size) {
+            Node<T> temp = first;
+            for (int j = 0; j < index; j++) {
+                temp = temp.next;
+            }
+            if (0 == index) {
+                first = first.next;
+                first.prev = null;
+            } else if (index == size - 1) {
+                last = last.prev;
+                last.next = null;
+            } else {
+                temp.next.prev = temp.prev;
+                temp.prev.next = temp.next;
+            }
+            size--;
         } else {
-            temp.next.prev = temp.prev;
-            temp.prev.next = temp.next;
+            throw new IndexOutOfBoundsException();
         }
-        size--;
+
     }
 
     @Override
@@ -55,12 +62,12 @@ public class MyLinkedList<T> implements MyList<T> {
     }
 
     private class Node<T> {
-        T t;
+        T element;
         Node<T> prev;
         Node<T> next;
 
-        Node(Node<T> prev, T t, Node<T> next) {
-            this.t = t;
+        Node(Node<T> prev, T element, Node<T> next) {
+            this.element = element;
             this.prev = prev;
             this.next = next;
         }

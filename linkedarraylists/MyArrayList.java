@@ -4,44 +4,55 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class MyArrayList<T> implements MyList<T> {
-    private int index = 0;
-    private T[] array = (T[]) new Object[10];
-    private double loadFactor = 0.75;
-    private double inc = 1.5;
+    private int size = 0;
+    private final int DEFAULT_CAPACITY = 10;
+    private Object[] data;
 
-    @Override
-    public T get(int i) {
-        return array[i];
+    MyArrayList() {
+        data = new Object[DEFAULT_CAPACITY];
     }
 
     @Override
-    public void add(T t) {
-        array[index] = t;
-        index++;
+    public T get(int index) {
+        if (index < size) {
+            return (T) data[index];
+        }
+        throw new IndexOutOfBoundsException();
+    }
 
-        if (array.length * loadFactor < index) {
-            T[] arrayTwo = (T[]) new Object[(int) (array.length * inc)];
-            System.arraycopy(array, 0, arrayTwo, 0, array.length);
-            array = arrayTwo;
+    @Override
+    public void add(T element) {
+        data[size] = element;
+        size++;
+
+        if (data.length * 0.75 < size) {
+            Object[] dataTwo = new Object[data.length * 2];
+            System.arraycopy(data, 0, dataTwo, 0, data.length);
+            data = dataTwo;
         }
     }
 
     @Override
-    public void remove(int i) {
-        while (array[i] != null) {
-            array[i] = array[i + 1];
-            i++;
+    public void remove(int index) {
+        if (index < size) {
+            while (data[index] != null) {
+                data[index] = data[index + 1];
+                index++;
+            }
+            size--;
+        } else {
+            throw new IndexOutOfBoundsException();
         }
-        index--;
+
     }
 
     @Override
     public int size() {
-        return index;
+        return size;
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(Arrays.stream(array).filter(Objects::nonNull).toArray());
+        return Arrays.toString(Arrays.stream(data).filter(Objects::nonNull).toArray());
     }
 }
