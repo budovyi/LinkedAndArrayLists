@@ -53,7 +53,6 @@ public class MyLinkedList<T> implements MyList<T> {
         } else {
             throw new IndexOutOfBoundsException();
         }
-
     }
 
     @Override
