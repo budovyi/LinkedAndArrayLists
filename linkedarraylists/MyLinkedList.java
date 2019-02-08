@@ -8,14 +8,18 @@ public class MyLinkedList<T> implements MyList<T> {
 
     @Override
     public T get(int index) {
-        if (index < size) {
-            Node<T> temp = first;
-            for (int j = 0; j < index; j++) {
-                temp = temp.next;
-            }
-            return temp.element;
+        isLargerThanSize(index);
+        Node<T> temp = first;
+        for (int j = 0; j < index; j++) {
+            temp = temp.next;
         }
-        throw new IndexOutOfBoundsException();
+        return temp.element;
+    }
+
+    private void isLargerThanSize(int index) {
+        if (index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
     }
 
     @Override

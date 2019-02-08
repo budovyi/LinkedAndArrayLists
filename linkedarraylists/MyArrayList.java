@@ -12,12 +12,21 @@ public class MyArrayList<T> implements MyList<T> {
         data = new Object[DEFAULT_CAPACITY];
     }
 
+    MyArrayList(int capacity) {
+        data = new Object[capacity];
+    }
+
     @Override
     public T get(int index) {
-        if (index < size) {
-            return (T) data[index];
+        isLargerThanSize(index);
+        return (T) data[index];
+
+    }
+
+    private void isLargerThanSize(int index) {
+        if (index >= size) {
+            throw new IndexOutOfBoundsException();
         }
-        throw new IndexOutOfBoundsException();
     }
 
     @Override
@@ -25,11 +34,19 @@ public class MyArrayList<T> implements MyList<T> {
         data[size] = element;
         size++;
 
-        if (data.length * 0.75 < size) {
-            Object[] dataTwo = new Object[data.length * 2];
-            System.arraycopy(data, 0, dataTwo, 0, data.length);
-            data = dataTwo;
+        if (isFull()) {
+            resize();
         }
+    }
+
+    private boolean isFull() {
+        return (data.length == size);
+    }
+
+    private void resize() {
+        Object[] dataTwo = new Object[data.length * 2];
+        System.arraycopy(data, 0, dataTwo, 0, data.length);
+        data = dataTwo;
     }
 
     @Override
