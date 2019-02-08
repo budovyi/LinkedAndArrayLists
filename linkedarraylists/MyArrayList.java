@@ -20,7 +20,6 @@ public class MyArrayList<T> implements MyList<T> {
     public T get(int index) {
         isLargerThanSize(index);
         return (T) data[index];
-
     }
 
     private void isLargerThanSize(int index) {
