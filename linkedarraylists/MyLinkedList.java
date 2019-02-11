@@ -38,25 +38,23 @@ public class MyLinkedList<T> implements MyList<T> {
 
     @Override
     public void remove(int index) {
-        if (index < size) {
-            Node<T> temp = first;
-            for (int j = 0; j < index; j++) {
-                temp = temp.next;
-            }
-            if (0 == index) {
-                first = first.next;
-                first.prev = null;
-            } else if (index == size - 1) {
-                last = last.prev;
-                last.next = null;
-            } else {
-                temp.next.prev = temp.prev;
-                temp.prev.next = temp.next;
-            }
-            size--;
-        } else {
-            throw new IndexOutOfBoundsException();
+        isLargerThanSize(index);
+
+        Node<T> temp = first;
+        for (int j = 0; j < index; j++) {
+            temp = temp.next;
         }
+        if (0 == index) {
+            first = first.next;
+            first.prev = null;
+        } else if (index == size - 1) {
+            last = last.prev;
+            last.next = null;
+        } else {
+            temp.next.prev = temp.prev;
+            temp.prev.next = temp.next;
+        }
+        size--;
     }
 
     @Override

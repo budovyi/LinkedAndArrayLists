@@ -8,11 +8,11 @@ public class MyArrayList<T> implements MyList<T> {
     private final int DEFAULT_CAPACITY = 10;
     private Object[] data;
 
-    MyArrayList() {
+    public MyArrayList() {
         data = new Object[DEFAULT_CAPACITY];
     }
 
-    MyArrayList(int capacity) {
+    public MyArrayList(int capacity) {
         data = new Object[capacity];
     }
 
@@ -20,7 +20,6 @@ public class MyArrayList<T> implements MyList<T> {
     public T get(int index) {
         isLargerThanSize(index);
         return (T) data[index];
-
     }
 
     private void isLargerThanSize(int index) {
@@ -51,15 +50,12 @@ public class MyArrayList<T> implements MyList<T> {
 
     @Override
     public void remove(int index) {
-        if (index < size) {
-            while (data[index] != null) {
-                data[index] = data[index + 1];
-                index++;
-            }
-            size--;
-        } else {
-            throw new IndexOutOfBoundsException();
+        isLargerThanSize(index);
+        while (data[index] != null) {
+            data[index] = data[index + 1];
+            index++;
         }
+        size--;
     }
 
     @Override
