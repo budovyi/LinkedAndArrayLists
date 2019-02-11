@@ -16,7 +16,7 @@ public class Demo {
         System.out.println(list);
         list.remove(2);
         System.out.println(list);
-        System.out.println(list.get(6));
+        System.out.println(list.get(5));
 
         MyList<Integer> list2 = new MyLinkedList<>();
 
@@ -27,6 +27,7 @@ public class Demo {
 
         System.out.println(list2);
         list2.remove(2);
+        System.out.println(list2.get(2));
         System.out.println(list2);
     }
 }

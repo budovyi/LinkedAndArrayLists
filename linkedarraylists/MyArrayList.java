@@ -4,44 +4,67 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class MyArrayList<T> implements MyList<T> {
-    private int index = 0;
-    private T[] array = (T[]) new Object[10];
-    private double loadFactor = 0.75;
-    private double inc = 1.5;
+    private int size = 0;
+    private final int DEFAULT_CAPACITY = 10;
+    private Object[] data;
 
-    @Override
-    public T get(int i) {
-        return array[i];
+    public MyArrayList() {
+        data = new Object[DEFAULT_CAPACITY];
+    }
+
+    public MyArrayList(int capacity) {
+        data = new Object[capacity];
     }
 
     @Override
-    public void add(T t) {
-        array[index] = t;
-        index++;
+    public T get(int index) {
+        isLargerThanSize(index);
+        return (T) data[index];
+    }
 
-        if (array.length * loadFactor < index) {
-            T[] arrayTwo = (T[]) new Object[(int) (array.length * inc)];
-            System.arraycopy(array, 0, arrayTwo, 0, array.length);
-            array = arrayTwo;
+    private void isLargerThanSize(int index) {
+        if (index >= size) {
+            throw new IndexOutOfBoundsException();
         }
     }
 
     @Override
-    public void remove(int i) {
-        while (array[i] != null) {
-            array[i] = array[i + 1];
-            i++;
+    public void add(T element) {
+        data[size] = element;
+        size++;
+
+        if (isFull()) {
+            resize();
         }
-        index--;
+    }
+
+    private boolean isFull() {
+        return (data.length == size);
+    }
+
+    private void resize() {
+        Object[] dataTwo = new Object[data.length * 2];
+        System.arraycopy(data, 0, dataTwo, 0, data.length);
+        data = dataTwo;
+    }
+
+    @Override
+    public void remove(int index) {
+        isLargerThanSize(index);
+        while (data[index] != null) {
+            data[index] = data[index + 1];
+            index++;
+        }
+        size--;
     }
 
     @Override
     public int size() {
-        return index;
+        return size;
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(Arrays.stream(array).filter(Objects::nonNull).toArray());
+        return Arrays.toString(Arrays.stream(data).filter(Objects::nonNull).toArray());
     }
 }
